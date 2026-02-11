@@ -40,11 +40,11 @@ jobs:
 
       - name: Push Docker image master
         id: push_master
-        run: docker push sickcodes/docker-osx:master
+        run: docker push jacksonk5546/docker-osx:master
 
       - name: Push Docker image latest
         id: push_latest
-        run: docker push sickcodes/docker-osx:latest
+        run: docker push jacksonk5546/docker-osx:latest
 
       - name: Logout from Docker Hub
         run: docker logout
