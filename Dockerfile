@@ -58,7 +58,7 @@ LABEL maintainer='https://twitter.com/sickcodes <https://sick.codes>'
 SHELL ["/bin/bash", "-c"]
 
 # change disk size here or add during build, e.g. --build-arg VERSION=10.14.5 --build-arg SIZE=50G
-ARG SIZE=200G
+ARG SIZE=50G
 ARG PARALLEL_DOWNLOADS=30
 
 # OPTIONAL: Arch Linux server mirrors for super fast builds
