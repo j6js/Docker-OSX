@@ -30,7 +30,7 @@ jobs:
       - name: Build Docker image
         id: build_image
         run: |
-          docker build "$GITHUB_WORKSPACE" -t sickcodes/docker-osx:master --label dockerfile-path="Dockerfile"
+          docker build "$GITHUB_WORKSPACE" -t sickcodes/docker-osx:master --label dockerfile-path="Dockerfile" --build-arg SIZE=50G
 
       - name: Label Master Docker Image as Latest
         id: label_image
