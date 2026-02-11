@@ -151,7 +151,7 @@ RUN touch enable-ssh.sh \
 
 # default env vars, RUNTIME ONLY, not for editing in build time.
 
-# RUN yes | sudo pacman -Syu qemu libvirt dnsmasq virt-manager bridge-utils edk2-ovmf netctl libvirt-dbus --overwrite --noconfirm
+# RUN yes | sudo pacman -Syu qemu libvirt dnsmasq virt-manager edk2-ovmf netctl libvirt-dbus --overwrite --noconfirm
 
 RUN yes | sudo pacman -Syu bc qemu-desktop libvirt dnsmasq virt-manager openresolv jack2 ebtables edk2-ovmf netctl libvirt-dbus wget scrot --overwrite --noconfirm \
     && yes | sudo pacman -Scc
@@ -191,13 +191,13 @@ RUN touch Launch.sh \
     && tee -a Launch.sh <<< '[[ "${RAM}" = half ]] && export RAM="$(("$(head -n1 /proc/meminfo | tr -dc "[:digit:]") / 2000000"))"' \
     && tee -a Launch.sh <<< 'sudo chown -R $(id -u):$(id -g) /dev/snd 2>/dev/null || true' \
     && tee -a Launch.sh <<< 'exec qemu-system-x86_64 -m ${RAM:-4}000 \' \
-    && tee -a Launch.sh <<< '-cpu ${CPU:-Penryn},${CPUID_FLAGS:-vendor=GenuineIntel,+invtsc,vmware-cpuid-freq=on,+ssse3,+sse4.2,+popcnt,+avx,+aes,+xsave,+xsaveopt,check,}${BOOT_ARGS} \' \
+    && tee -a Launch.sh <<< '-cpu ${CPU:-Skylake-Client},${CPUID_FLAGS:-vendor=GenuineIntel,-hle,-rtm,+invtsc,vmware-cpuid-freq=on,+ssse3,+sse4.2,+popcnt,+avx,+aes,+xsave,+xsaveopt,check,}${BOOT_ARGS} \' \
     && tee -a Launch.sh <<< '-machine q35,${KVM-"accel=kvm:tcg"} \' \
     && tee -a Launch.sh <<< '-smp ${CPU_STRING:-${SMP:-4},cores=${CORES:-4}} \' \
     && tee -a Launch.sh <<< '-device qemu-xhci,id=xhci \' \
     && tee -a Launch.sh <<< '-device usb-kbd,bus=xhci.0 -device usb-tablet,bus=xhci.0 \' \
     && tee -a Launch.sh <<< '-device isa-applesmc,osk=ourhardworkbythesewordsguardedpleasedontsteal\(c\)AppleComputerInc \' \
-    && tee -a Launch.sh <<< '-drive if=pflash,format=raw,readonly=on,file=/home/arch/OSX-KVM/OVMF_CODE.fd \' \
+    && tee -a Launch.sh <<< '-drive if=pflash,format=raw,readonly=on,file=/home/arch/OSX-KVM/OVMF_CODE_4M.fd \' \
     && tee -a Launch.sh <<< '-drive if=pflash,format=raw,file=/home/arch/OSX-KVM/OVMF_VARS-1024x768.fd \' \
     && tee -a Launch.sh <<< '-smbios type=2 \' \
     && tee -a Launch.sh <<< '-audiodev ${AUDIO_DRIVER:-alsa},id=hda -device ich9-intel-hda -device hda-duplex,audiodev=hda \' \
